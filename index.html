@@ -693,7 +693,7 @@ function show(n,push=false){
   document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',Number(x.dataset.n)===n));
   const target=document.getElementById(`section-${n}`);
-  if(target){target.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(push)history.pushState(null,'',`#section-${n}`)}
+  if(target){target.classList.add('active');target.scrollIntoView({behavior:'smooth',block:'start'});if(push)history.pushState(null,'',`#section-${n}`)}
 }
 
 document.addEventListener('click',e=>{
