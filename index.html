@@ -15,8 +15,17 @@ nav{border-right:1px solid var(--line);padding:16px;position:sticky;top:76px;hei
 nav h2{font-size:14px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 10px}
 nav button{width:100%;text-align:left;background:transparent;border:1px solid transparent;color:var(--text);padding:9px 10px;border-radius:8px;cursor:pointer;margin-bottom:5px;font-size:14px}
 nav button:hover,nav button.active{background:var(--panel2);border-color:var(--line)}
+.search-area{margin:0 0 16px;grid-column:1/-1}
+.search-area label{display:block;color:var(--muted);font-size:13px;margin-bottom:7px}
+#tree-search{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:14px}
+#tree-search:focus{outline:2px solid var(--accent);outline-offset:1px}
+#search-results{margin-top:8px}
+#search-results:empty{display:none}
+#search-results button{display:block;margin:0 0 5px;width:100%;background:var(--panel2);border-color:var(--line)}
+#search-results small{display:block;color:var(--muted);font-size:12px;line-height:1.35;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.search-status{color:var(--muted);font-size:12px;margin:5px 0 8px}
 main{padding:24px;max-width:1200px;width:100%}
-.section{display:none}.section.active{display:block}
+.section{display:none;scroll-margin-top:88px}.section.active{display:block}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,.16)}
 .section h2{margin:0 0 8px;font-size:28px}.section .sub{color:var(--muted);margin-bottom:18px}
 .tree{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;white-space:pre-wrap;line-height:1.5;background:#0b0f14;border:1px solid var(--line);border-radius:12px;padding:18px;overflow:auto}
@@ -33,7 +42,13 @@ main{padding:24px;max-width:1200px;width:100%}
   <p>28 interconnected sections. Click a section at left; linked tree references jump directly to the related section.</p>
 </header>
 <div class="layout">
-<nav id="nav"><h2>Technique Trees</h2></nav>
+<nav id="nav"><h2>Technique Trees</h2>
+  <div class="search-area">
+    <label for="tree-search">Search techniques and situations</label>
+    <input id="tree-search" type="search" placeholder="e.g., cast over, whizzer, sit out" autocomplete="off" aria-controls="search-results" />
+    <div id="search-results" aria-live="polite"></div>
+  </div>
+</nav>
 <main id="main"></main>
 </div>
 <script>
@@ -675,6 +690,47 @@ HEAD → HANDS / HORN UP → HIPS → ANGLE → COUNTERATTACK → SCORE`,refs:[1
 const byNum = Object.fromEntries(sections.map(s=>[s.n,s]));
 const nav = document.getElementById('nav');
 const main = document.getElementById('main');
+const searchInput = document.getElementById('tree-search');
+const searchResults = document.getElementById('search-results');
+
+function updateSearch(){
+  const query=searchInput.value.trim().toLocaleLowerCase();
+  searchResults.replaceChildren();
+  if(!query)return;
+  const terms=query.split(/\s+/);
+  const matches=sections.map(s=>{
+    const lines=s.tree.split('\n').map(line=>line.replace(/^[\s│├└─]+/g,'').trim()).filter(Boolean);
+    const titleHit=s.title.toLocaleLowerCase().includes(query);
+    const matchingLines=lines.filter(line=>terms.every(term=>line.toLocaleLowerCase().includes(term)));
+    const fullTreeHit=terms.every(term=>s.tree.toLocaleLowerCase().includes(term));
+    return {s,titleHit,matchingLines,fullTreeHit};
+  }).filter(m=>m.titleHit||m.fullTreeHit)
+    .sort((a,b)=>Number(b.titleHit)-Number(a.titleHit)||b.matchingLines.length-a.matchingLines.length||a.s.n-b.s.n);
+  const status=document.createElement('div');
+  status.className='search-status';
+  status.textContent=matches.length ? `${matches.length} matching ${matches.length===1?'tree':'trees'}` : 'No matching trees';
+  searchResults.appendChild(status);
+  matches.forEach(({s,matchingLines})=>{
+    const button=document.createElement('button');
+    button.type='button';
+    button.dataset.go=s.n;
+    button.textContent=`${s.n}. ${s.title}`;
+    if(matchingLines.length){
+      const detail=document.createElement('small');
+      detail.textContent=matchingLines.slice(0,2).join(' · ');
+      button.appendChild(detail);
+    }
+    searchResults.appendChild(button);
+  });
+}
+searchInput.addEventListener('input',updateSearch);
+searchInput.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    const first=searchResults.querySelector('button[data-go]');
+    if(first){e.preventDefault();first.click()}
+  }
+  if(e.key==='Escape'){searchInput.value='';updateSearch()}
+});
 
 function addTreeLinks(text){
   // references in the visible tree become links where exact section phrases occur
@@ -714,7 +770,7 @@ sections.forEach((s,i)=>{
 
 function show(n,push=false){
   document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',Number(x.dataset.n)===n));
+  document.querySelectorAll('nav button[data-n]').forEach(x=>x.classList.toggle('active',Number(x.dataset.n)===n));
   const target=document.getElementById(`section-${n}`);
   if(target){target.classList.add('active');target.scrollIntoView({behavior:'smooth',block:'start'});if(push)history.pushState(null,'',`#section-${n}`)}
 }
