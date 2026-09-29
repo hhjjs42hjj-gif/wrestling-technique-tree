@@ -852,9 +852,23 @@ function updateSearch(){
     if(type==='skill'){
       button.dataset.go=item.n;
       button.textContent=`Skill Tree ${item.n}: ${item.title}`;
+      button.addEventListener('click',e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        show(item.n,true);
+        searchInput.value='';
+        updateSearch();
+      });
     }else{
       button.dataset.drill=item.n;
       button.textContent=`Drill Level ${item.n}: ${item.title}`;
+      button.addEventListener('click',e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        showDrill(item.n,true);
+        searchInput.value='';
+        updateSearch();
+      });
     }
     if(matchingLines.length){
       const detail=document.createElement('small');
@@ -867,7 +881,7 @@ function updateSearch(){
 searchInput.addEventListener('input',updateSearch);
 searchInput.addEventListener('keydown',e=>{
   if(e.key==='Enter'){
-    const first=searchResults.querySelector('button[data-go]');
+    const first=searchResults.querySelector('button[data-go], button[data-drill]');
     if(first){e.preventDefault();first.click()}
   }
   if(e.key==='Escape'){searchInput.value='';updateSearch()}
