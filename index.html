@@ -41,6 +41,10 @@ main{padding:24px;max-width:1200px;width:100%}
 .drill-submenu{display:none;padding:5px 7px 7px;border-top:1px solid var(--line);background:var(--bg)}
 .drill-menu.open .drill-submenu{display:block}
 .drill-submenu button{font-size:12.5px;padding:7px 8px;margin-bottom:3px}
+.coach-focus{margin:5px 0 9px;padding:11px 10px;border:1px solid var(--line);border-radius:8px;background:var(--panel);font-size:12px;line-height:1.45;color:var(--muted)}
+.coach-focus strong{color:var(--text)}
+.coach-focus .focus-title{color:var(--good);font-weight:800;font-size:12.5px;margin-bottom:6px}
+.coach-focus .focus-order{color:var(--text);margin-bottom:7px}
 .drill-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:14px}
 .drill-table th,.drill-table td{padding:10px 11px;border:1px solid var(--line);text-align:left;vertical-align:top;line-height:1.4}
 .drill-table th{background:var(--panel2)}
@@ -866,6 +870,13 @@ drillMenuButton.textContent='Drills and Progressions';
 drillMenuButton.setAttribute('aria-expanded','false');
 const drillSubmenu=document.createElement('div');
 drillSubmenu.className='drill-submenu';
+const coachFocus=document.createElement('div');
+coachFocus.className='coach-focus';
+coachFocus.innerHTML=`<div class="focus-title">Coach Focus — Full Development Order</div>
+<div class="focus-order"><strong>Mobility/body control → stance &amp; footwork → neutral defense → basic attacks → hand fighting → bottom → top → turns/pins → recognition/reaction drills → neutral positional live → single-leg live → referee's-position live → pin survival → scrambling.</strong></div>
+<div><strong>Practice planning:</strong> warm up with Level 1–2 movements, teach/review from Levels 3–10, and finish with positional wrestling from Levels 11–15.</div>
+<div style="margin-top:7px">For elementary and middle-school groups, <strong>do not wait</strong> until wrestlers have “mastered” Levels 1–10 before doing positional live. The levels describe <strong>complexity</strong>, not a months-long curriculum. Even beginners can do simple 15–30-second positional rounds very early; choose positions appropriate to what they've learned.</div>`;
+drillSubmenu.appendChild(coachFocus);
 drillLevels.forEach(level=>{
   const button=document.createElement('button');
   button.type='button';
