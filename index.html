@@ -62,7 +62,7 @@ main{padding:24px;max-width:1200px;width:100%}
 <body>
 <header>
   <h1>Folkstyle Wrestling Technique Tree</h1>
-  <p>30 interconnected technique trees plus 15 drill/progression levels. Use the Drills and Progressions menu to open each level.</p>
+  <p>31 interconnected technique trees plus 15 drill/progression levels. Use the Drills and Progressions menu to open each level.</p>
 </header>
 <div class="layout">
 <nav id="nav">
@@ -806,7 +806,16 @@ HEAD → HANDS / HORN UP → HIPS → ANGLE → COUNTERATTACK → SCORE`,refs:[1
 └── Read the Reaction
     ├── Opponent Reacts → Attack the Opening With the Second Move
     ├── No Opening → Change Fake, Direction, or Timing
-    └── Keep Moving → Connect the Fake and Follow-Up`,refs:[1,2,5,6,7,8,9,10,11,12],coach:'Many combinations work. These are examples, not a fixed sequence: make the fake believable, read the reaction, and follow immediately with the next move.'}
+    └── Keep Moving → Connect the Fake and Follow-Up`,refs:[1,2,5,6,7,8,9,10,11,12,31],coach:'Many combinations work. These are examples, not a fixed sequence: make the fake believable, read the reaction, and follow immediately with the next move.'},
+{n:31,title:'Throws',tree:`THROWS
+│
+├── Pancake
+├── Cow Catcher
+├── Lateral Drop
+├── Hip Toss
+├── Body Lock
+├── Osoto Gari
+└── Uchi Mata`,refs:[5,6,12,30]}
 ];
 
 const byNum = Object.fromEntries(sections.map(s=>[s.n,s]));
@@ -909,7 +918,8 @@ const treeAliases = [
   ['Double Leg',8],['Double-Leg',8],['High Crotch',9],['High-Crotch',9],
   ['Low Single',11],['Low-Single',11],['Tight Waist',16],['Tight-waist',16],['Tight waist',16],
   ['Spiral Ride',17],['Spiral ride',17],['Spiral',17],['Collar Tie',2],['Collar tie',2],
-  ['Shot Recovery',7],['Neutral Defense',13],['Peterson',23]
+  ['Shot Recovery',7],['Neutral Defense',13],['Peterson',23],
+  ['Cow Catcher',31],['Pancake',31],['Lateral Drop',31],['Hip Toss',31],['Body Lock',31],['Osoto Gari',31],['Uchi Mata',31]
 ].sort((a,b)=>b[0].length-a[0].length);
 
 function linkTreeKeywords(text){
