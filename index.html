@@ -39,7 +39,7 @@ main{padding:24px;max-width:1200px;width:100%}
 <body>
 <header>
   <h1>Folkstyle Wrestling Technique Tree</h1>
-  <p>29 interconnected sections. Click a section at left; linked tree references jump directly to the related section.</p>
+  <p>30 interconnected sections. Click a section at left; linked tree references jump directly to the related section.</p>
 </header>
 <div class="layout">
 <nav id="nav"><h2>Technique Trees</h2>
@@ -67,7 +67,7 @@ Opponent gives:
 ├── Head → Attack Head
 ├── Arm → Attack Arm
 ├── Leg → Attack Leg
-└── Pressure → Redirect Pressure`,refs:[2,3,4,5,6,7,13]},
+└── Pressure → Redirect Pressure`,refs:[2,3,4,5,6,7,13,30]},
 {n:2,title:'Collar-Tie Tree',tree:`YOU ESTABLISH COLLAR TIE
 │
 ├── Establish Forehead / Temple Position
@@ -213,7 +213,7 @@ Opponent gives:
     ├── High Crotch
     ├── Head-Inside Single
     ├── Sweep Single
-    └── Low Single`,refs:[8,9,10,11]},
+    └── Low Single`,refs:[8,9,10,11,30]},
 {n:8,title:'Double-Leg Tree',tree:`DOUBLE LEG
 │
 ├── Setup
@@ -743,7 +743,40 @@ HEAD → HANDS / HORN UP → HIPS → ANGLE → COUNTERATTACK → SCORE`,refs:[1
     ├── Opponent Locks Upper Body → Hand Fight + Create Hip Space
     ├── Avoid Reaching / Leaning Over Their Hips
     ├── Already Airborne → Use Practiced Breakfall → Do Not Post a Straight Arm
-    └── After Landing → Clear Control → Belly / Base → Recover`,refs:[13,23,24,26,27],coach:'Start each drill before the hold is fully secured, then add controlled resistance. Once a hold is locked, the exact escape depends on the grip and body position; stop and reset if the neck or shoulder is trapped.'}
+    └── After Landing → Clear Control → Belly / Base → Recover`,refs:[13,23,24,26,27],coach:'Start each drill before the hold is fully secured, then add controlled resistance. Once a hold is locked, the exact escape depends on the grip and body position; stop and reset if the neck or shoulder is trapped.'},
+{n:30,title:'Misdirection Shots Tree',tree:`FAKE → CREATE A REACTION → FOLLOW WITH A SECOND MOVE
+│
+├── Use Many Fakes
+│   ├── Fake Shots
+│   ├── Fake Throws
+│   ├── Fake Snapdowns
+│   └── Mix Levels, Directions, and Timing
+│
+├── Fake a Shot → Follow Up
+│   ├── Fake Single to One Side → Attack Single on Other Side
+│   ├── Fake Double → Follow With Single
+│   ├── Fake Low Single → Follow With High Crotch
+│   └── Fake Shot → Follow With Snapdown
+│
+├── Fake a Throw → Follow Up
+│   ├── Fake Throw → Follow With Double Leg
+│   ├── Fake Throw → Follow With Single Leg
+│   └── Fake Throw → Follow With Snapdown
+│
+├── Fake a Snapdown → Follow Up
+│   ├── Fake Snapdown → Follow With Double Leg
+│   ├── Fake Snapdown → Follow With High Crotch
+│   └── Fake Snapdown → Follow With Single Leg
+│
+├── Chain Multiple Fakes
+│   ├── Fake Shot → Fake Snapdown → Shot
+│   ├── Fake Snapdown → Fake Shot → Snapdown
+│   └── Fake One Side → Fake Other Side → Attack Opening
+│
+└── Read the Reaction
+    ├── Opponent Reacts → Attack the Opening With the Second Move
+    ├── No Opening → Change Fake, Direction, or Timing
+    └── Keep Moving → Connect the Fake and Follow-Up`,refs:[1,2,5,6,7,8,9,10,11,12],coach:'Many combinations work. These are examples, not a fixed sequence: make the fake believable, read the reaction, and follow immediately with the next move.'}
 ];
 
 const byNum = Object.fromEntries(sections.map(s=>[s.n,s]));
