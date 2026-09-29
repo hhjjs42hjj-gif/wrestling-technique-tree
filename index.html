@@ -873,26 +873,37 @@ searchInput.addEventListener('keydown',e=>{
   if(e.key==='Escape'){searchInput.value='';updateSearch()}
 });
 
-function addTreeLinks(text){
-  // references in the visible tree become links where exact section phrases occur
-  const names = [
-    ['Front-Headlock Tree',12],['Front Headlock',12],['Single-Leg Tree',10],['Russian / 2-on-1 Tree',6],
-    ['Leg-Riding Tree',22],['Arm-Bar Tree',19],['Cradle Tree',21],['Tilt Tree',18],['Half-Nelson Tree',20],
-    ['Wrist-Control Tree',4],['Underhook Tree',5],['Scramble',28]
-    ['Double Leg',8],
-    ['High Crotch',9],
-    ['Head-Inside Single',10],
-    ['Sweep Single',10],
-    ['Low Single',11],
-  ];
-  let out = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  for(const [label,n] of names){
-    const esc = label.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
-    out = out.replace(new RegExp(esc,'g'),`<a href="#section-${n}" data-go="${n}">${label}</a>`);
+const treeAliases = [
+  ['Front-Headlock Tree',12],['Front Headlock',12],
+  ['Single-Leg Tree',10],['Single Leg',10],['Head-Inside Single',10],['Sweep Single',10],
+  ['Russian / 2-on-1 Tree',6],['Russian 2-on-1',6],['Russian tie',6],['2-on-1',6],
+  ['Leg-Riding Tree',22],['Leg Ride',22],['Legs In',22],['Legs in',22],
+  ['Arm-Bar Tree',19],['Arm Bar',19],['Arm bar',19],['Rebar',19],
+  ['Cradle Tree',21],['Cradle',21],['Tilt Tree',18],['Tilts',18],['Tilt',18],
+  ['Half-Nelson Tree',20],['Half Nelson',20],['Half-Nelson',20],
+  ['Wrist-Control Tree',4],['Wrist Control',4],['Underhook Tree',5],['Underhook',5],
+  ['Scramble',28],['Merkle',28],['Spladle',28],
+  ['Double Leg',8],['Double-Leg',8],['High Crotch',9],['High-Crotch',9],
+  ['Low Single',11],['Low-Single',11],['Tight Waist',16],['Tight-waist',16],['Tight waist',16],
+  ['Spiral Ride',17],['Spiral ride',17],['Spiral',17],['Collar Tie',2],['Collar tie',2],
+  ['Shot Recovery',7],['Neutral Defense',13],['Peterson',23]
+].sort((a,b)=>b[0].length-a[0].length);
+
+function linkTreeKeywords(text){
+  let out=String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const placeholders=[];
+  for(const [label,n] of treeAliases){
+    const esc=label.replace(/[.*+?^$()|[\]\\]/g,'\\$&');
+    out=out.replace(new RegExp(esc,'gi'),match=>{
+      const token='@@TREE_LINK_'+placeholders.length+'@@';
+      placeholders.push('<a href="#section-'+n+'" data-go="'+n+'">'+match+'</a>');
+      return token;
+    });
   }
+  placeholders.forEach((html,i)=>{out=out.replace('@@TREE_LINK_'+i+'@@',html)});
   return out;
 }
-
+function addTreeLinks(text){ return linkTreeKeywords(text); }
 
 const skillMenu=document.createElement('div');
 skillMenu.className='nav-group open';
@@ -942,7 +953,7 @@ drillLevels.forEach(level=>{
   const sec=document.createElement('section');
   sec.className='section drill-section';
   sec.id=`drill-level-${level.n}`;
-  const rows=level.rows.map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td></tr>`).join('');
+  const rows=level.rows.map(r=>`<tr><td>${linkTreeKeywords(r[0])}</td><td>${linkTreeKeywords(r[1])}</td><td>${linkTreeKeywords(r[2])}</td></tr>`).join('');
   sec.innerHTML=`<div class="card">
     ${level.group?`<div class="drill-kicker">${level.group}</div>`:''}
     <h2>Level ${level.n} — ${level.title}</h2>
