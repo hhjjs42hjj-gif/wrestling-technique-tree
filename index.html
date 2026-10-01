@@ -28,7 +28,7 @@ main{padding:24px;max-width:1200px;width:100%}
 .section{display:none;scroll-margin-top:88px}.section.active{display:block}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,.16)}
 .section h2{margin:0 0 8px;font-size:28px}.section .sub{color:var(--muted);margin-bottom:18px}
-.tree{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;white-space:pre-wrap;line-height:1.5;background:#0b0f14;border:1px solid var(--line);border-radius:12px;padding:18px;overflow:auto}
+.tree{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;white-space:normal;line-height:1.5;background:#0b0f14;border:1px solid var(--line);border-radius:12px;padding:18px;overflow:auto}.tree-line{display:block;white-space:pre-wrap;overflow-wrap:anywhere;padding-left:var(--wrap-indent,0ch);text-indent:calc(-1 * var(--wrap-indent,0ch));min-height:1.5em}
 .links{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
 .links a{display:inline-block;margin:4px 8px 4px 0;padding:5px 8px;border:1px solid var(--line);border-radius:999px;background:var(--panel2)}
 .badge{display:inline-block;font-size:12px;padding:3px 7px;border-radius:999px;background:#17314f;color:#b9dcff;margin-left:8px;vertical-align:middle}
@@ -946,7 +946,14 @@ function linkTreeKeywords(text){
   placeholders.forEach((html,i)=>{out=out.replace('@@TREE_LINK_'+i+'@@',html)});
   return out;
 }
-function addTreeLinks(text){ return linkTreeKeywords(text); }
+function addTreeLinks(text){
+  return text.split('\n').map(line=>{
+    const m=line.match(/^([\s│├└─]*?(?:├── |└── )?)/);
+    const prefix=m?m[1]:'';
+    const indent=prefix.length;
+    return `<span class="tree-line" style="--wrap-indent:${indent}ch">${linkTreeKeywords(line)}</span>`;
+  }).join('');
+}
 
 const skillMenu=document.createElement('div');
 skillMenu.className='nav-group open';
