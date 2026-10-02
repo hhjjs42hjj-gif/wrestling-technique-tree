@@ -1088,33 +1088,9 @@ function linkTreeKeywords(text,currentTree=null){
   let out=String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const placeholders=[];
   for(const [label,n] of treeAliases){
-    const esc=label.replace(/[.*+?^$()|[\]\\]/g,'\\function linkTreeKeywords(text){
-  let out=String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  const placeholders=[];
-  for(const [label,n] of treeAliases){
     const esc=label.replace(/[.*+?^$()|[\]\\]/g,'\\$&');
     out=out.replace(new RegExp(esc,'gi'),match=>{
       const token='@@TREE_LINK_'+placeholders.length+'@@';
-      placeholders.push('<a href="#section-'+n+'" data-go="'+n+'">'+match+'</a>');
-      return token;
-    });
-  }
-  placeholders.forEach((html,i)=>{out=out.replace('@@TREE_LINK_'+i+'@@',html)});
-  return out;
-}
-function addTreeLinks(text){
-  return text.split('\n').map(line=>{
-    if(line==='') return '<span class="tree-line">&nbsp;</span>';
-    const m=line.match(/^([\s│├└─]*)(.*)$/);
-    const prefix=m?m[1]:'';
-    const body=m?m[2]:line;
-    return `<span class="tree-line"><span class="tree-prefix">${prefix}</span><span class="tree-text">${linkTreeKeywords(body)}</span></span>`;
-  }).join('');
-}');
-    out=out.replace(new RegExp(esc,'gi'),match=>{
-      const token='@@TREE_LINK_'+placeholders.length+'@@';
-      // Blue text must always navigate somewhere useful. Do not link a
-      // technique back to the same Skill Tree the wrestler is already viewing.
       placeholders.push(Number(currentTree)===Number(n)
         ? match
         : '<a href="#section-'+n+'" data-go="'+n+'">'+match+'</a>');
