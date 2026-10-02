@@ -36,7 +36,6 @@ main{padding:24px;max-width:1200px;width:100%}
 #top-button{position:fixed;right:22px;bottom:22px;z-index:10;border:1px solid var(--line);border-radius:999px;background:var(--panel2);color:var(--text);padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.3)}
 #top-button:hover{border-color:var(--accent);background:var(--panel)}
 #current-selection{display:none}
-body.menus-only main,body.menus-only #current-selection{display:none!important}
 
 .nav-group{margin:4px 0 12px;border:1px solid var(--line);border-radius:10px;background:#111821;overflow:hidden}
 .nav-group>button{margin:0;border:0;border-radius:0;font-weight:700}
@@ -72,7 +71,18 @@ body.menus-only main,body.menus-only #current-selection{display:none!important}
 @media(max-width:800px){.curriculum-overview,.core6-grid{grid-template-columns:1fr}}
 @media(max-width:800px){.nav-group{grid-column:1/-1}.nav-submenu{grid-template-columns:1fr 1fr}.drill-table{display:block;overflow-x:auto}.drill-table th,.drill-table td{min-width:160px}}
 
-@media(max-width:800px){header{position:relative;top:auto}.layout{grid-template-columns:1fr}nav{position:sticky;top:0;z-index:25;height:auto;overflow:visible;border-right:none;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:6px;box-shadow:0 8px 18px rgba(0,0,0,.35);padding:8px}.search-area{position:relative;top:auto;z-index:auto;background:var(--panel);padding:0;margin:0 0 4px}.nav-group{margin:0}.nav-group>button{padding:8px 10px}.nav-submenu{max-height:55vh;overflow:auto}#current-selection{display:block;position:sticky;top:190px;z-index:24;background:var(--panel2);border-bottom:1px solid var(--line);padding:7px 14px;font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}main{padding:14px}.section{scroll-margin-top:235px}.section h2{font-size:23px}}
+@media(max-width:800px){
+  header{position:relative;top:auto}
+  .layout{grid-template-columns:1fr}
+  nav{position:relative;top:auto;z-index:auto;height:auto;overflow:visible;border-right:none;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:8px;box-shadow:none;padding:12px}
+  .search-area{position:relative;top:auto;z-index:auto;background:var(--panel);padding:0;margin:0 0 8px}
+  .nav-group{margin:0 0 8px}
+  .nav-submenu{max-height:none;overflow:visible}
+  #current-selection{display:none!important}
+  main{padding:14px}
+  .section{scroll-margin-top:16px}
+  .section h2{font-size:23px}
+}
 </style>
 </head>
 <body>
@@ -1124,7 +1134,6 @@ skillSubmenu.className='nav-submenu';
 skillMenuButton.addEventListener('click',()=>{
   const open=skillMenu.classList.toggle('open');
   skillMenuButton.setAttribute('aria-expanded',String(open));
-  updateMenuOnlyState();
 });
 skillMenu.append(skillMenuButton,skillSubmenu);
 nav.appendChild(skillMenu);
@@ -1154,7 +1163,6 @@ drillLevels.forEach(level=>{
 drillMenuButton.addEventListener('click',()=>{
   const open=drillMenu.classList.toggle('open');
   drillMenuButton.setAttribute('aria-expanded',String(open));
-  updateMenuOnlyState();
 });
 drillMenu.append(drillMenuButton,drillSubmenu);
 nav.appendChild(drillMenu);
@@ -1184,7 +1192,6 @@ curriculumWeeks.forEach(week=>{
 curriculumMenuButton.addEventListener('click',()=>{
   const open=curriculumMenu.classList.toggle('open');
   curriculumMenuButton.setAttribute('aria-expanded',String(open));
-  updateMenuOnlyState();
 });
 curriculumMenu.append(curriculumMenuButton,curriculumSubmenu);
 nav.appendChild(curriculumMenu);
@@ -1272,34 +1279,13 @@ sections.forEach((s,i)=>{
   main.appendChild(sec);
 });
 
-function updateMenuOnlyState(){
-  if(!isMobileLayout()){
-    document.body.classList.remove('menus-only');
-    return;
-  }
-  const anyOpen=[skillMenu,drillMenu,curriculumMenu].some(menu=>menu.classList.contains('open'));
-  document.body.classList.toggle('menus-only',!anyOpen);
-}
-
 function isMobileLayout(){
   return window.matchMedia('(max-width:800px)').matches;
-}
-function collapseMobileMenus(){
-  if(!isMobileLayout()) return;
-  [skillMenu,drillMenu,curriculumMenu].forEach(menu=>menu.classList.remove('open'));
-  [skillMenuButton,drillMenuButton,curriculumMenuButton].forEach(button=>button.setAttribute('aria-expanded','false'));
-  updateMenuOnlyState();
 }
 function revealTarget(target){
   if(!target) return;
   target.classList.add('active');
-  if(isMobileLayout()){
-    collapseMobileMenus();
-    document.body.classList.remove('menus-only');
-    requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}));
-  }else{
-    target.scrollIntoView({behavior:'smooth',block:'start'});
-  }
+  target.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 function setCurrentSelection(label){
@@ -1356,7 +1342,6 @@ document.addEventListener('click',e=>{
   const a=e.target.closest('[data-go]');
   if(a){e.preventDefault();show(Number(a.dataset.go),true)}
 });
-window.addEventListener('resize',updateMenuOnlyState);
 window.addEventListener('popstate',()=>{
   if(location.hash==='#curriculum-core'){showCurriculum('core',false);return}
   const w=location.hash.match(/curriculum-week-(\d+)/);
