@@ -70,7 +70,7 @@ main{padding:24px;max-width:1200px;width:100%}
 @media(max-width:800px){.curriculum-overview,.core6-grid{grid-template-columns:1fr}}
 @media(max-width:800px){.nav-group{grid-column:1/-1}.nav-submenu{grid-template-columns:1fr 1fr}.drill-table{display:block;overflow-x:auto}.drill-table th,.drill-table td{min-width:160px}}
 
-@media(max-width:800px){header{position:relative;top:auto} .layout{grid-template-columns:1fr}nav{position:sticky;top:0;z-index:20;height:auto;overflow:visible;border-right:none;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:8px;box-shadow:0 8px 18px rgba(0,0,0,.35)}nav h2{grid-column:1/-1}nav button{margin:0}.search-area{position:sticky;top:0;z-index:22;background:var(--panel);padding-bottom:8px;margin-bottom:8px}main{padding:14px}.section h2{font-size:23px}}
+@media(max-width:800px){header{position:relative;top:auto}.layout{grid-template-columns:1fr}nav{position:sticky;top:0;z-index:20;height:auto;overflow:visible;border-right:none;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:8px;box-shadow:0 8px 18px rgba(0,0,0,.35)}nav h2{grid-column:1/-1}nav button{margin:0}.search-area{position:sticky;top:0;z-index:22;background:var(--panel);padding-bottom:8px;margin-bottom:8px}main{padding:14px}.section{scroll-margin-top:245px}.section h2{font-size:23px}}
 </style>
 </head>
 <body>
@@ -1266,6 +1266,25 @@ sections.forEach((s,i)=>{
   main.appendChild(sec);
 });
 
+function isMobileLayout(){
+  return window.matchMedia('(max-width:800px)').matches;
+}
+function collapseMobileMenus(){
+  if(!isMobileLayout()) return;
+  [skillMenu,drillMenu,curriculumMenu].forEach(menu=>menu.classList.remove('open'));
+  [skillMenuButton,drillMenuButton,curriculumMenuButton].forEach(button=>button.setAttribute('aria-expanded','false'));
+}
+function revealTarget(target){
+  if(!target) return;
+  target.classList.add('active');
+  if(isMobileLayout()){
+    collapseMobileMenus();
+    requestAnimationFrame(()=>target.scrollIntoView({behavior:'smooth',block:'start'}));
+  }else{
+    target.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+}
+
 function show(n,push=false){
   document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('nav button[data-n]').forEach(x=>x.classList.toggle('active',Number(x.dataset.n)===n));
@@ -1274,7 +1293,7 @@ function show(n,push=false){
   skillMenu.classList.add('open');
   skillMenuButton.setAttribute('aria-expanded','true');
   const target=document.getElementById(`section-${n}`);
-  if(target){target.classList.add('active');target.scrollIntoView({behavior:'smooth',block:'start'});if(push)history.pushState(null,'',`#section-${n}`)}
+  if(target){revealTarget(target);if(push)history.pushState(null,'',`#section-${n}`)}
 }
 
 function showDrill(n,push=false){
@@ -1285,7 +1304,7 @@ function showDrill(n,push=false){
   drillMenu.classList.add('open');
   drillMenuButton.setAttribute('aria-expanded','true');
   const target=document.getElementById(`drill-level-${n}`);
-  if(target){target.classList.add('active');target.scrollIntoView({behavior:'smooth',block:'start'});if(push)history.pushState(null,'',`#drill-level-${n}`)}
+  if(target){revealTarget(target);if(push)history.pushState(null,'',`#drill-level-${n}`)}
 }
 
 function showCurriculum(n,push=false){
@@ -1298,8 +1317,7 @@ function showCurriculum(n,push=false){
   else document.querySelectorAll('nav button[data-week]').forEach(x=>x.classList.toggle('active',Number(x.dataset.week)===Number(n)));
   const target=document.getElementById(isCore?'curriculum-core':`curriculum-week-${n}`);
   if(target){
-    target.classList.add('active');
-    target.scrollIntoView({behavior:'smooth',block:'start'});
+    revealTarget(target);
     if(push) history.pushState(null,'',isCore?'#curriculum-core':`#curriculum-week-${n}`);
   }
 }
