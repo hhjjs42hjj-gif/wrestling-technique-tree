@@ -54,6 +54,20 @@ main{padding:24px;max-width:1200px;width:100%}
 .drill-table td:nth-child(2){width:40%}
 .drill-note{margin:14px 0 0;padding:12px 14px;border-left:3px solid var(--accent);background:#101820;border-radius:8px;color:#d7e8fa}
 .drill-kicker{color:var(--accent);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+.curriculum-overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}
+.curriculum-stat{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:12px}
+.curriculum-stat strong{display:block;font-size:18px;margin-bottom:3px}
+.curriculum-stat span{font-size:12px;color:var(--muted)}
+.core6-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:16px 0}
+.core6-item{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:12px;line-height:1.4}
+.core6-item strong{display:block;margin-bottom:4px}
+.practice-card{border:1px solid var(--line);background:var(--bg);border-radius:12px;padding:14px;margin:12px 0}
+.practice-card h3{margin:0 0 6px;font-size:17px}
+.practice-card .practice-focus{color:var(--accent);font-weight:700;margin-bottom:7px}
+.practice-card p{margin:6px 0;line-height:1.45}
+.practice-card .practice-live{color:var(--muted);font-size:13px}
+.phase-badge{display:inline-block;font-size:12px;padding:4px 8px;border:1px solid var(--line);border-radius:999px;background:var(--panel2);margin-bottom:10px}
+@media(max-width:800px){.curriculum-overview,.core6-grid{grid-template-columns:1fr}}
 @media(max-width:800px){.nav-group{grid-column:1/-1}.nav-submenu{grid-template-columns:1fr 1fr}.drill-table{display:block;overflow-x:auto}.drill-table th,.drill-table td{min-width:160px}}
 
 @media(max-width:800px){.layout{grid-template-columns:1fr}nav{position:relative;top:auto;height:auto;border-right:none;border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}nav h2{grid-column:1/-1}nav button{margin:0}main{padding:14px}.section h2{font-size:23px}}
@@ -62,13 +76,13 @@ main{padding:24px;max-width:1200px;width:100%}
 <body>
 <header>
   <h1>Folkstyle Wrestling Technique Tree</h1>
-  <p>31 interconnected technique trees plus 15 drill/progression levels. Use the Drills and Progressions menu to open each level.</p>
+  <p>31 interconnected technique trees, 15 drill/progression levels, and a 17-week season curriculum. Use the Drills and Progressions menu to open each level.</p>
 </header>
 <div class="layout">
 <nav id="nav">
   <div class="search-area">
-    <label for="tree-search">Search techniques and situations</label>
-    <input id="tree-search" type="search" placeholder="e.g., cast over, whizzer, sit out" autocomplete="off" aria-controls="search-results" />
+    <label for="tree-search">Search skills, drills and curriculum</label>
+    <input id="tree-search" type="search" placeholder="e.g., single leg, stand-up, Week 6" autocomplete="off" aria-controls="search-results" />
     <div id="search-results" aria-live="polite"></div>
   </div>
 </nav>
@@ -846,6 +860,104 @@ topButton.addEventListener('click',()=>{
 const drillLevels = [{"n":1,"title":"Mobility, Body Control & Wrestling Warm-Up","rows":[["Knee/hip mobility","Work through kneeling, squatting and hip movements","Opens hips, knees and ankles for wrestling positions"],["Back bridge / back flexibility","Arch backward, using wall or with partner in thumb handshake","Neck, back, shoulder and hip mobility; prepares for bridging"],["Walking the wall","From standing, reach backward to wall and walk hands downward","Develops bridge flexibility and confidence moving backward"],["Headstand against wall","Head/hands supported while controlling body against wall","Neck strength, balance and body awareness"],["Handstand against wall","Support body on hands against wall","Shoulder strength, core control and posting ability"],["Bear walk","Walk on hands and feet","Shoulder/core strength and mat movement"],["Crab walk","Travel on hands and feet facing upward","Hip, shoulder and posterior-chain strength"],["Duck walk","Travel from deep squat","Hip/ankle mobility and leg endurance"],["Lizard walk/perpetual shot","Continuous shooting alternating knee drops","Hip mobility, core strength and low-position movement"],["Walk on hands","Handstand walk across mat","Shoulder strength, balance and body control"],["Hand walk → forward roll","Hand walk and roll when losing balance","Teaches safe recovery from inverted positions"],["Knees → feet → jump","Explode from knees to feet and immediately jump","Hip explosion for shots, stand-ups and finishes"],["Clap/box push-ups","Explosive push-up with clap or onto box","Explosive posting and upper-body power"],["Rope climbs","Climb using hands/arms with controlled body position","Grip, back and pulling strength"]]},{"n":2,"title":"Stance, Footwork & Head Position","rows":[["Wall back-step/footwork","Step one foot then turn while opposite foot steps in backwards","Quick feet and hip movement"],["Stance against wall","Maintain stance with wall preventing backward movement","Forces good knee bend and stance without retreating"],["Movement/stance drill","Move across mat while maintaining wrestling posture","Footwork, conditioning and stance discipline"],["Heel-toe knee swisher","Heel/toe movement while changing knee/hip direction","Hip/knee mobility and directional movement"],["Pivot drill","Step one foot onto line, rotate on heels to face opposite direction","Teaches rotation angle for takedown and hip toss"],["Gather step","Lead foot advances and trail foot gathers without crossing","Closes distance without losing stance"],["Duck walk into partner","Hands behind back; use head/shoulder to drive partner five steps backwards","Head position, leg drive and pressure without using arms"],["Bear walk → sit → hip heist → stance","Crawl, sit through/hip heist and recover to stance","Connects mat movement with stance recovery"]]},{"n":3,"title":"Fundamental Neutral Defense","rows":[["Spin drill with cross-block","Circle/spin while establishing cross-block","Angle creation and defensive movement"],["Block shot → head/leg back","Block attacker while moving attacked leg away","Develops first reaction to a shot"],["Wrist biceps curl","When opponent controls wrist, curl controlled hand toward chest","Clears wrist and recovers inside position"],["Sprawl","Get both legs back, hips down, stay on toes for more downward and forward pressure","Fundamental leg attack defense"]]},{"n":4,"title":"Fundamental Neutral Attacks","rows":[["Bono setup","Use hand/head positioning to create an opening","Creates opponent reaction before attacking"],["Double leg ×10","Repeated double-leg entries and finishes","Fundamental two-leg attack"],["Head-inside single ×10","Attack one leg with head inside","Develops single-leg entry and finish"],["High crotch ×10","Penetrate between legs with head outside","Creates access to singles/doubles and finishes"],["Arm drag ×10","Pull opponent's arm across while creating angle","Gets to opponent's side/back"],["Slide-by ×10","Redirect opponent past you","Uses opponent's pressure to create angle"],["Snap-down ×10","Pull opponent's head/upper body downward as you circle","Creates front-headlock and go-behind opportunities"],["Collar tie → underhook → Throw by","Establish collar tie and transition to underhook either side, step across body, punch arm over head, catch leg","Connects hand fighting to offensive control"],["Shoot → shoot → duck → duck → pull leg → stand","Chain several attacks/movements before collecting leg and finishing","Develops continuous attacking and transition between techniques"]]},{"n":5,"title":"Hand Fighting & Tie Control","rows":[["Collar tie + wrist","Forehead/head pressure combined with wrist control","Controls opponent's head and attacking hand"],["Underhook + wrist/elbow","Underhook while controlling and putting pressure on opposite arm","Strong offensive position"],["Underhook + head control","Combine underhook with collar tie, look for snap into front headlock","Controls posture and creates attacks"],["Over-under","One underhook and one overhook","Upper-body positioning, trips and throws"],["Double overhooks","Control both arms from outside","Develops upper-body offense/defense"],["Cobra tie/Preying mantis","Arm control behind both shoulders, push/pull and circle","Creates angles and controls posture"],["Russian 2-on-1","Two hands control one arm","Creates drags, singles, trips and go-behinds"],["Body lock","Lock around opponent's torso","Pressure, trips, throws and mat returns"]]},{"n":6,"title":"Bottom Fundamentals","rows":[["Belly/Y → build-up","Start flattened and rebuild base","Recover from bad bottom position"],["Work up from bottom","Progress from belly using army crawl, pushup, knee slide","Develops bottom-position movement"],["Stand-up ×10","Repeated stand-up escapes","Makes fundamental escape automatic"],["Step-up and seal","Step up while using arm to prevent cross wrist or chop attack","Creates separation"],["Standing with opponent locked around waist","Fight hands/hips from rear standing position","Finish escape and prevent mat return"],["Tripod","Elevate hips while maintaining base","Creates pressure and space"],["Tripod → circle/block","Block arm and circle away","Escape/reversal"],["Peterson","Turn opponent using their pressure","Reversal and near-fall"],["Quadpod → circle → stand","Build higher base and turn out","Escape under resistance"],["Quadpod → Granby","Roll underneath opponent's pressure","Advanced escape/reversal"]]},{"n":7,"title":"Top Control & Breakdowns","rows":[["Tight-waist chop","Tight waist while chopping supporting arm","Fundamental breakdown"],["Tight waist → chop → 2-on-1","Break down opponent and secure wrist","Connects breakdown to riding"],["Spiral ride","Apply rotational pressure to break opponent's base; near hand at shoulder and far as thigh pry, keep weight on back and look for wrist","Ride and breakdown"],["Spiral → T-bone","Transition perpendicular from spiral; reach to far tricep while lifting at the crotch","Strong hip/upper-body control"],["Claw/spiral","Control upper body while rotating hips; apply pressure with arm thru shoulder and across neck","Maintains ride as opponent builds"],["Crossface + ankle","Control upper body and ankle simultaneously; keep legs behind arm, switch sides and look for crossface cradle","Prevents base and creates turns"],["Legs in","After double thigh pry, insert leg hook(s) while controlling hips, pull both wrists to flatten","Advanced riding"],["Legs → guillotine/banana split/power half/cast-over","Leg ride into upper-body turns; attack far arm/leg, forearm on head/lift far shoulder, when flat cast hip over and crossface","Near-fall/pinning combination"]]},{"n":8,"title":"Turns & Pins","rows":[["Half Nelson","Control head/wrist and drive opponent over; rotate opponent to their shoulder","Fundamental pinning combination"],["Arm bar","Trap arm behind opponent","Turn and pin"],["Rebar","Maintain arm and wrist control while turning","Pinning/turning variation"],["Cradle","Connect opponent's head and leg","Controls shoulders and hips"],["Spiral → crossface cradle","Breakdown flows directly into cradle","Connects riding to near-fall"],["Tilts — cheap, Easton, ball/chain","Expose opponent's back while maintaining control","Near-fall scoring"],["Headlock","Head-and-arm control","Upper-body takedown/pinning"],["Over-under chest-to-chest","Pivot turn or back step into lateral drop, maintain chest pressure while opponent fights off back","Pinning pressure and positioning"]]},{"n":9,"title":"Cradle Recognition Drill","rows":[["Referee's position","Find available cradle","Basic cradle recognition"],["Inside leg up","Bottom changes base; top finds cradle","Recognize changing head/knee relationship"],["Outside leg up","Find cradle from opposite configuration","Develop both sides"],["Sit-out","Find cradle while bottom moves","Catch cradles during escapes"],["Tripod","Find cradle as hips elevate","Recognize cradle during build-up"]]},{"n":10,"title":"Hammerlock/Reaction Drill","rows":[["Spiral → near-wrist","Maintain wrist while controlling build-up","Riding and breakdown"],["Partner builds and elbow fights","Bottom actively improves position","Forces top wrestler to react"],["Hammerlock opportunity","Use both hands to put opponent’s hand on hip; look for cow catcher, arm bar","Connects riding to turning"],["Switch sides","Repeat entire sequence opposite direction","Develops bilateral ability"]],"note":"This is an excellent bridge between cooperative drilling and live wrestling."},{"n":11,"title":"Neutral Tie-Up Live","group":"Positional Live Wrestling","rows":[["Underhook + elbow/wrist","Both fight to score or improve position","Underhook offense and defense"],["Underhook + head control","Fight for takedown/escape from tie","Head-position awareness"],["Over-under","Fight for dominant upper-body position","Pummeling, trips and throws"],["Double overhooks","Wrestle out of unusual upper-body position","Positional problem solving"],["Collar tie + wrist","Score from established tie","Converts hand fighting into attacks"],["Cobra tie","Score or escape","Tie-specific offense/defense"],["Russian tie","Score or clear the 2-on-1","Russian offense/defense"],["Body lock","Score or escape","Trips, throws and hip positioning"]]},{"n":12,"title":"Single-Leg Live","group":"Positional Live Wrestling","rows":[["Single on mat","Wrestle live with leg already captured","Finishing versus defense"],["Single standing","Wrestle with defender's leg elevated","Balance and finishing"],["Jonesy","Apply designated single-leg reaction","Adds solution to common position"],["Shin whizzer","Defender establishes counter position","Single-leg defense"],["Roll arm under knee","Change control around knee/leg","Counter/finish difficult singles"],["Run corner → shelf","Turn corner and shelf leg","Control hips and complete takedown"]]},{"n":13,"title":"Referee's Position Live","group":"Positional Live Wrestling","rows":[["Top has 2-on-1","Bottom escapes while top rides/turns","Wrist-control battle"],["2-on-1 → elbow fight","Bottom prevents tilt","Tilt offense/defense"],["Arm bar + tight waist/half","Start near turning position","Pinning offense and survival"],["Half + wrist/elbow pit","Fight from established half","Half-Nelson offense/defense"],["Claw/spiral","Bottom builds; top follows","Dynamic riding"],["Crossface + ankle","Top attempts turn while bottom escapes","Turn recognition"],["Legs in","Bottom escapes while top rides/turns","Leg-ride offense/defense"],["Tight-waist chop","Start at fundamental breakdown","Breakdown versus escape"]]},{"n":14,"title":"Pinning-Position Live","group":"Positional Live Wrestling","rows":[["Cradle","Bottom escapes while top finishes; break lock, bridge, roll","Cradle offense/defense"],["Tilt","Bottom fights exposure, stay low, get wide","Near-fall awareness"],["Headlock","Bottom survives/escapes; get low, push hip away, roll thru with body lock","Pin survival"],["Over-under chest-to-chest","Bottom bridges/moves; top settles","Pinning pressure versus movement"],["Half Nelson","Bottom clears half; top tries to finish","Fundamental pin battle"],["Arm bar/rebar","Bottom clears trapped arm","Turn prevention"]]},{"n":15,"title":"Scramble Wrestling","group":"Positional Live Wrestling","rows":[["Each wrestler has a leg","Begin in 50/50 leg entanglement","Positional awareness"],["Pass the leg","Move opponent's leg across/away","Changes hip relationship and scoring angle"],["Funk roll from mat","Roll through leg position","Counter conventional finishes"],["Funk roll from feet","Enter funk from standing attack","Advanced takedown defense"],["Spladle","Recognize head/leg configuration during scramble","Convert scramble into near-fall"],["Continuous scramble","Flow between available positions without stopping wrestling","Reaction, creativity and chain wrestling"],["Merkle","Wrestle through Merkle position","Takedown/reversal awareness in transitions"]]}];
 
 
+
+const core6 = [
+  ['Stance/Motion + Basic Shot Defense','Move correctly, maintain head/hands position, sprawl, recover and reattack.'],
+  ['Double Leg','Primary two-leg attack from pressure, fake and level change.'],
+  ['Single Leg','Second fundamental leg attack with reliable finishes.'],
+  ['Stand-Up','Primary bottom escape: build height, hand control, hip separation.'],
+  ['Tight-Waist Chop','Primary top breakdown that connects directly to wrist control and turns.'],
+  ['Half Nelson','Primary turn and pinning combination.']
+];
+
+const curriculumWeeks = [
+  {n:1,range:'Nov 2–7',phase:'Foundation',drill:'80%',live:'20%',focus:'Give every wrestler a move from neutral, bottom and top.',p:[
+    ['Practice 1 — Neutral foundation','Stance/Motion + Basic Shot Defense','Neutral — Root Position; Neutral Defense; stance and movement; head, hands, hips; short stance-motion games.','15–20 second neutral reaction rounds.'],
+    ['Practice 2 — First escape','Stand-Up','Bottom-Position; build base → stand → hand control → hip separation → escape.','15–20 second bottom rounds from referee’s position.'],
+    ['Practice 3 — First breakdown and turn','Tight-Waist Chop → Half Nelson','Tight-Waist; Half Nelson; chop → settle → half → chest-to-chest pinning pressure.','Top starts with tight waist; 20-second turn-or-escape rounds.']
+  ]},
+  {n:2,range:'Nov 9–14',phase:'Foundation',drill:'75%',live:'25%',focus:'Complete the Core 6 and begin linking positions.',p:[
+    ['Practice 1 — Primary attack','Double Leg','Pressure, fake, level change → Double Leg; finish through resistance; immediate cover.','Neutral rounds where attacker must score with Double Leg or transition.'],
+    ['Practice 2 — Second attack','Single Leg','Single Leg entry; run corner; shelf; finish; basic opponent-has-your-leg awareness.','Single-leg live from captured leg.'],
+    ['Practice 3 — Core 6 circuit','Core 6 review','Stance/defense → Double Leg → Single Leg → Stand-Up → Tight-Waist Chop → Half Nelson.','Short rotating neutral/top/bottom rounds.']
+  ]},
+  {n:3,range:'Nov 16–21',phase:'Foundation',drill:'70%',live:'30%',focus:'Repeat the Core 6 under resistance before adding volume.',p:[
+    ['Practice 1 — Setup to attack','Collar Tie + Double Leg','Collar-Tie; clearing ties; pressure and fake into Double Leg.','Neutral positional rounds beginning in Collar Tie.'],
+    ['Practice 2 — Bottom repetition','Stand-Up + Tripod','Bottom-Position; Stand-Up review; add Tripod and circle/block.','Bottom must escape in 20–30 seconds.'],
+    ['Practice 3 — Top repetition','Tight-Waist Chop → Half Nelson','Add Spiral Ride as a second way to pressure into Half Nelson.','Top must break down and turn; bottom builds and escapes.']
+  ]},
+  {n:4,range:'Nov 23–28',phase:'Expansion I',drill:'65%',live:'35%',focus:'Add one new neutral family while preserving the Core 6.',p:[
+    ['Practice 1 — High Crotch','High Crotch','High-Crotch entry and finish; connect from hand fighting.','High-Crotch positional starts.'],
+    ['Practice 2 — Shot recovery','Shots/Shot Recovery','Post hand; tripod; knee slide; run the corner; split the middle.','Start from a stopped shot and wrestle to score.'],
+    ['Practice 3 — Top/bottom maintenance','Stand-Up + Half Nelson','Fast Core 6 review; no large new technique block.','Alternating 30-second referee’s-position rounds.']
+  ]},
+  {n:5,range:'Nov 30–Dec 5',phase:'Expansion I',drill:'65%',live:'35%',focus:'Teach the front-headlock scoring system.',p:[
+    ['Practice 1 — Front headlock','Front Headlock','Chin + arm; circle behind; head position; go-behind.','Front-headlock live.'],
+    ['Practice 2 — Reactions','Cow Catcher + Pancake','Front Headlock reactions; connect to Throws; recognize when opponent posts or drives.','Short front-headlock reaction rounds.'],
+    ['Practice 3 — Chain day','Shot → Front Headlock → Score','Attack, opponent sprawls, recover to Front Headlock or Crackdown.','Neutral live with emphasis on second attacks.']
+  ]},
+  {n:6,range:'Dec 7–12',phase:'Expansion I',drill:'60%',live:'40%',focus:'Build a stronger top system around pressure and wrists.',p:[
+    ['Practice 1 — Spiral system','Spiral Ride','Spiral pressure; find wrist; follow opponent building.','Top starts Spiral; bottom builds.'],
+    ['Practice 2 — Wrist turn','Wrist Control → Tilt','Near wrist, cross wrist and simple tilt exposure.','20-second tilt-or-escape rounds.'],
+    ['Practice 3 — Core top chain','Tight-Waist Chop → Spiral Ride → Half Nelson','Choose first breakdown based on reaction.','Top/bottom positional live with scoring.']
+  ]},
+  {n:7,range:'Dec 14–19',phase:'Expansion I',drill:'60%',live:'40%',focus:'Add cradle recognition without losing foundational turns.',p:[
+    ['Practice 1 — Cradle recognition','Cradle','Recognize head-knee relationship from top and transitions.','Cradle recognition rounds from changing bases.'],
+    ['Practice 2 — Spiral to cradle','Spiral Ride → Cradle','Spiral → crossface cradle; connect breakdown to near-fall.','Top chooses Half Nelson or Cradle.'],
+    ['Practice 3 — Pinning live','Half Nelson + Cradle','Review the two primary turn families.','Pinning-position live with bottom survival.']
+  ]},
+  {n:8,range:'Dec 21–26',phase:'Retention',drill:'60%',live:'40%',focus:'Holiday retention week: repeat, compete and avoid overloading.',p:[
+    ['Practice 1 — Core 6 speed review','Core 6','Perfect repetitions with minimal talking.','Short competitive stations.'],
+    ['Practice 2 — Favorite attack','Double Leg / Single Leg / High Crotch','Wrestlers select the attack currently working best.','Neutral score-first rounds.'],
+    ['Practice 3 — Favorite top/bottom','Stand-Up + preferred turn','Stand-Up plus Half Nelson, Cradle or Tilt.','Mixed-position king-of-the-mat style rounds.']
+  ]},
+  {n:9,range:'Dec 28–Jan 2',phase:'Expansion II',drill:'55%',live:'45%',focus:'Improve finishes and reactions against real defense.',p:[
+    ['Practice 1 — Single-leg battles','Single Leg + Opponent Has Your Leg','Finisher works while defender establishes Whizzer/Shin Whizzer reactions.','Single-leg live from mat and standing.'],
+    ['Practice 2 — High-Crotch Crackdown','High Crotch → Crackdown','Shelf leg; cartwheel; trap arm and roll to back; head hunt to Cradle.','Start in Crackdown and wrestle to score.'],
+    ['Practice 3 — Finish chains','Shot Recovery → Reattack','Failed shot becomes recovery, corner, Front Headlock or second attack.','Continuous neutral rounds.']
+  ]},
+  {n:10,range:'Jan 4–9',phase:'Expansion II',drill:'50%',live:'50%',focus:'Add arm-bar offense and specific bottom defense.',p:[
+    ['Practice 1 — Arm bar','Arm Bar','Secure bar; run bar; maintain pressure; recognize second-arm opportunities.','Arm-bar turn-or-escape rounds.'],
+    ['Practice 2 — Bottom defense','Bottom vs Arm-Bar + Bottom vs Half-Nelson','Clear trapped arm; half defense; rebuild base.','Begin in bad positions and escape.'],
+    ['Practice 3 — Referee’s-position live','Top vs Bottom','Top chooses Tight Waist, Spiral, Half Nelson or Arm Bar; bottom uses Stand-Up/Tripod.','Longer 30–45 second live rounds.']
+  ]},
+  {n:11,range:'Jan 11–16',phase:'System Building',drill:'45%',live:'55%',focus:'Move from isolated techniques to two- and three-move chains.',p:[
+    ['Practice 1 — Neutral chain','Collar Tie / Wrist Control / Underhook → attack','Setup must create a reaction before Double Leg, Single Leg or High Crotch.','Neutral tie-up live.'],
+    ['Practice 2 — Top chain','Breakdown → Turn A → Turn B','Tight Waist or Spiral → Half Nelson / Cradle / Tilt / Arm Bar.','Top stays live through first failed turn.'],
+    ['Practice 3 — Bottom chain','Stand-Up → Tripod → secondary escape','First move fails, immediately move to next escape.','Referee’s-position live with ride-out scoring.']
+  ]},
+  {n:12,range:'Jan 18–23',phase:'System Building',drill:'45%',live:'55%',focus:'Add misdirection, reattacks and scramble awareness.',p:[
+    ['Practice 1 — Misdirection','Misdirection Shots','Fake shot, throw or snapdown → second attack.','Neutral rounds score only after a setup/reaction.'],
+    ['Practice 2 — Scramble basics','Scramble','Head higher; protect hips; control a leg; shelf/pass leg; Merkle awareness.','Controlled scramble starts.'],
+    ['Practice 3 — Chain wrestling','Attack → defense → reattack','Blend Shot Recovery, Front Headlock and Scramble.','45-second continuous wrestling bursts.']
+  ]},
+  {n:13,range:'Jan 25–30',phase:'System Building',drill:'40%',live:'60%',focus:'Expose wrestlers to leg riding and its defense without making it mandatory.',p:[
+    ['Practice 1 — Leg riding','Leg-Riding','Entry from Spiral; flatten; power half/cast-over awareness.','Leg-ride positional live.'],
+    ['Practice 2 — Leg-ride defense','Bottom vs Leg-Ride','Opposite shoulder up; swim; build hips; sit out/tripod to clear hook.','Bottom starts with leg already in.'],
+    ['Practice 3 — Choice-based top wrestling','Personal top system','Wrestler chooses Tight Waist, Spiral or Legs In based on strengths.','Top/bottom live with near-fall scoring.']
+  ]},
+  {n:14,range:'Feb 1–6',phase:'Individualization',drill:'35%',live:'65%',focus:'Identify each wrestler’s A-game from every position.',p:[
+    ['Practice 1 — Neutral A-game','Primary setup → primary attack → backup attack','Select best two neutral attacks and one recovery.','Match-like neutral rounds.'],
+    ['Practice 2 — Top A-game','Primary breakdown → Turn A → Turn B','Select one breakdown and two turns.','Top must score near-fall or ride out.'],
+    ['Practice 3 — Bottom A-game','First escape → backup escape','Stand-Up remains default; add wrestler’s best secondary option.','Bottom must escape under scoreboard pressure.']
+  ]},
+  {n:15,range:'Feb 8–13',phase:'Individualization',drill:'30%',live:'70%',focus:'Add throws selectively and pressure-test personal systems.',p:[
+    ['Practice 1 — Throws by tie','Throws','Underhook, Over-Under, Body Lock, Front Headlock and Russian 2-on-1 entries; use only appropriate throws for each athlete.','Controlled throw-entry positional wrestling.'],
+    ['Practice 2 — Personal chain','A-game chain rehearsal','Neutral attack → Takedown → Top Transition → preferred turn.','Start neutral and continue through score.'],
+    ['Practice 3 — Match rounds','Full systems','Coach between short matches; correct decisions rather than adding moves.','High live volume with full scoring.']
+  ]},
+  {n:16,range:'Feb 15–20',phase:'Competition',drill:'25%',live:'75%',focus:'Competition decisions, scoreboard situations and conditioning through wrestling.',p:[
+    ['Practice 1 — Score-first situations','Neutral A-game','30 seconds to get a takedown; defend a lead; reattack off opponent shot.','Short high-intensity situation rounds.'],
+    ['Practice 2 — Top/bottom situations','Ride, escape, turn','30 seconds left up one/down one; need escape; need turn; ride-out scenarios.','Scoreboard-driven positional live.'],
+    ['Practice 3 — Match simulation','Full match','Warm-up, bout, between-period choices, overtime-style situations.','Mostly live; short technical corrections only.']
+  ]},
+  {n:17,range:'Feb 22–27',phase:'Peak / State Week',drill:'35%',live:'65% → taper',focus:'Sharpen the A-game, reduce fatigue and enter the tournament confident.',p:[
+    ['Practice 1 — System rehearsal','A-game checklist','Primary setup, primary takedown, backup attack, shot recovery; primary breakdown, two turns; first and second escape.','Moderate live; stop before fatigue changes technique.'],
+    ['Practice 2 — Championship situations','Scoreboard wrestling','30 seconds down one; up one; need escape; need takedown; opponent has your leg; Front Headlock; ride-out.','Short intense situational rounds with full recovery.'],
+    ['Practice 3 — Pre-state sharpness','Perfect reps only','Movement → hand fight → 5–10 perfect primary attacks → escapes → breakdowns → turns. No new technique.','Very short bursts; taper conditioning and finish fresh.']
+  ]}
+];
+
 function updateSearch(){
   const query=searchInput.value.trim().toLocaleLowerCase();
   searchResults.replaceChildren();
@@ -870,7 +982,16 @@ function updateSearch(){
     return {type:'drill',item:level,titleHit,matchingLines,hit};
   }).filter(m=>m.titleHit||m.hit);
 
-  const matches=[...skillMatches,...drillMatches]
+  const curriculumMatches=curriculumWeeks.map(week=>{
+    const lines=[week.phase,week.focus,...week.p.flatMap(p=>p)].map(String);
+    const haystack=('Week '+week.n+' '+week.range+' '+lines.join(' ')).toLocaleLowerCase();
+    const titleHit=('Week '+week.n+' '+week.phase).toLocaleLowerCase().includes(query);
+    const matchingLines=lines.filter(line=>terms.every(term=>line.toLocaleLowerCase().includes(term)));
+    const hit=terms.every(term=>haystack.includes(term));
+    return {type:'curriculum',item:week,titleHit,matchingLines,hit};
+  }).filter(m=>m.titleHit||m.hit);
+
+  const matches=[...skillMatches,...drillMatches,...curriculumMatches]
     .sort((a,b)=>Number(b.titleHit)-Number(a.titleHit)||b.matchingLines.length-a.matchingLines.length||a.item.n-b.item.n);
 
   const status=document.createElement('div');
@@ -891,13 +1012,23 @@ function updateSearch(){
         searchInput.value='';
         updateSearch();
       });
-    }else{
+    }else if(type==='drill'){
       button.dataset.drill=item.n;
       button.textContent=`Drill Level ${item.n}: ${item.title}`;
       button.addEventListener('click',e=>{
         e.preventDefault();
         e.stopPropagation();
         showDrill(item.n,true);
+        searchInput.value='';
+        updateSearch();
+      });
+    }else{
+      button.dataset.week=item.n;
+      button.textContent=`Curriculum Week ${item.n}: ${item.phase}`;
+      button.addEventListener('click',e=>{
+        e.preventDefault();
+        e.stopPropagation();
+        showCurriculum(item.n,true);
         searchInput.value='';
         updateSearch();
       });
@@ -913,7 +1044,7 @@ function updateSearch(){
 searchInput.addEventListener('input',updateSearch);
 searchInput.addEventListener('keydown',e=>{
   if(e.key==='Enter'){
-    const first=searchResults.querySelector('button[data-go], button[data-drill]');
+    const first=searchResults.querySelector('button[data-go], button[data-drill], button[data-week]');
     if(first){e.preventDefault();first.click()}
   }
   if(e.key==='Escape'){searchInput.value='';updateSearch()}
@@ -1004,6 +1135,72 @@ drillMenuButton.addEventListener('click',()=>{
 drillMenu.append(drillMenuButton,drillSubmenu);
 nav.appendChild(drillMenu);
 
+const curriculumMenu=document.createElement('div');
+curriculumMenu.className='nav-group';
+const curriculumMenuButton=document.createElement('button');
+curriculumMenuButton.type='button';
+curriculumMenuButton.textContent='Season Curriculum';
+curriculumMenuButton.setAttribute('aria-expanded','false');
+const curriculumSubmenu=document.createElement('div');
+curriculumSubmenu.className='nav-submenu';
+
+const coreButton=document.createElement('button');
+coreButton.type='button';
+coreButton.dataset.curriculum='core';
+coreButton.textContent='Core 6 — Foundation System';
+curriculumSubmenu.appendChild(coreButton);
+
+curriculumWeeks.forEach(week=>{
+  const button=document.createElement('button');
+  button.type='button';
+  button.dataset.week=week.n;
+  button.textContent=`Week ${week.n} — ${week.range}`;
+  curriculumSubmenu.appendChild(button);
+});
+curriculumMenuButton.addEventListener('click',()=>{
+  const open=curriculumMenu.classList.toggle('open');
+  curriculumMenuButton.setAttribute('aria-expanded',String(open));
+});
+curriculumMenu.append(curriculumMenuButton,curriculumSubmenu);
+nav.appendChild(curriculumMenu);
+
+const coreSec=document.createElement('section');
+coreSec.className='section curriculum-section';
+coreSec.id='curriculum-core';
+coreSec.innerHTML=`<div class="card">
+  <div class="drill-kicker">Season Curriculum</div>
+  <h2>Core 6 — Foundation System</h2>
+  <div class="sub">Every wrestler gets a dependable action from neutral, top and bottom immediately. The season then spirals back through these foundations while adding complexity and resistance.</div>
+  <div class="core6-grid">${core6.map((x,i)=>`<div class="core6-item"><strong>${i+1}. ${linkTreeKeywords(x[0])}</strong>${linkTreeKeywords(x[1])}</div>`).join('')}</div>
+  <div class="coach"><strong>System-building rule:</strong> Learn → drill → positional drill → positional live → chain → full live → competition system. New technique gradually decreases as positional wrestling and live wrestling increase.</div>
+</div>`;
+main.appendChild(coreSec);
+
+curriculumWeeks.forEach(week=>{
+  const sec=document.createElement('section');
+  sec.className='section curriculum-section';
+  sec.id=`curriculum-week-${week.n}`;
+  const practices=week.p.map(p=>`<div class="practice-card">
+    <h3>${p[0]}</h3>
+    <div class="practice-focus">${linkTreeKeywords(p[1])}</div>
+    <p><strong>Teach / review:</strong> ${linkTreeKeywords(p[2])}</p>
+    <p class="practice-live"><strong>Positional/live:</strong> ${linkTreeKeywords(p[3])}</p>
+  </div>`).join('');
+  sec.innerHTML=`<div class="card">
+    <div class="phase-badge">${week.phase}</div>
+    <h2>Week ${week.n} — ${week.range}</h2>
+    <div class="sub">${week.focus}</div>
+    <div class="curriculum-overview">
+      <div class="curriculum-stat"><strong>${week.drill}</strong><span>Technique / drilling</span></div>
+      <div class="curriculum-stat"><strong>${week.live}</strong><span>Positional / live</span></div>
+      <div class="curriculum-stat"><strong>3</strong><span>Practices</span></div>
+      <div class="curriculum-stat"><strong>Core 6</strong><span>Revisited throughout</span></div>
+    </div>
+    ${practices}
+  </div>`;
+  main.appendChild(sec);
+});
+
 drillLevels.forEach(level=>{
   const sec=document.createElement('section');
   sec.className='section drill-section';
@@ -1047,6 +1244,7 @@ function show(n,push=false){
   document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('nav button[data-n]').forEach(x=>x.classList.toggle('active',Number(x.dataset.n)===n));
   document.querySelectorAll('nav button[data-drill]').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('nav button[data-week], nav button[data-curriculum]').forEach(x=>x.classList.remove('active'));
   skillMenu.classList.add('open');
   skillMenuButton.setAttribute('aria-expanded','true');
   const target=document.getElementById(`section-${n}`);
@@ -1056,6 +1254,7 @@ function show(n,push=false){
 function showDrill(n,push=false){
   document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('nav button[data-n]').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('nav button[data-week], nav button[data-curriculum]').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('nav button[data-drill]').forEach(x=>x.classList.toggle('active',Number(x.dataset.drill)===n));
   drillMenu.classList.add('open');
   drillMenuButton.setAttribute('aria-expanded','true');
@@ -1063,21 +1262,48 @@ function showDrill(n,push=false){
   if(target){target.classList.add('active');target.scrollIntoView({behavior:'smooth',block:'start'});if(push)history.pushState(null,'',`#drill-level-${n}`)}
 }
 
+function showCurriculum(n,push=false){
+  document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('nav button[data-n], nav button[data-drill], nav button[data-week], nav button[data-curriculum]').forEach(x=>x.classList.remove('active'));
+  curriculumMenu.classList.add('open');
+  curriculumMenuButton.setAttribute('aria-expanded','true');
+  const isCore=n==='core';
+  if(isCore) coreButton.classList.add('active');
+  else document.querySelectorAll('nav button[data-week]').forEach(x=>x.classList.toggle('active',Number(x.dataset.week)===Number(n)));
+  const target=document.getElementById(isCore?'curriculum-core':`curriculum-week-${n}`);
+  if(target){
+    target.classList.add('active');
+    target.scrollIntoView({behavior:'smooth',block:'start'});
+    if(push) history.pushState(null,'',isCore?'#curriculum-core':`#curriculum-week-${n}`);
+  }
+}
+
 document.addEventListener('click',e=>{
+  const core=e.target.closest('[data-curriculum]');
+  if(core){e.preventDefault();showCurriculum('core',true);return}
+  const week=e.target.closest('[data-week]');
+  if(week){e.preventDefault();showCurriculum(Number(week.dataset.week),true);return}
   const drill=e.target.closest('[data-drill]');
   if(drill){e.preventDefault();showDrill(Number(drill.dataset.drill),true);return}
   const a=e.target.closest('[data-go]');
   if(a){e.preventDefault();show(Number(a.dataset.go),true)}
 });
 window.addEventListener('popstate',()=>{
+  if(location.hash==='#curriculum-core'){showCurriculum('core',false);return}
+  const w=location.hash.match(/curriculum-week-(\d+)/);
+  if(w){showCurriculum(Number(w[1]),false);return}
   const d=location.hash.match(/drill-level-(\d+)/);
   if(d){showDrill(Number(d[1]),false);return}
   const m=location.hash.match(/section-(\d+)/);
   show(m?Number(m[1]):1,false);
 });
+const initialWeek=location.hash.match(/curriculum-week-(\d+)/);
 const initialDrill=location.hash.match(/drill-level-(\d+)/);
 const initial=location.hash.match(/section-(\d+)/);
-if(initialDrill)showDrill(Number(initialDrill[1]),false);else show(initial?Number(initial[1]):1,false);
+if(location.hash==='#curriculum-core')showCurriculum('core',false);
+else if(initialWeek)showCurriculum(Number(initialWeek[1]),false);
+else if(initialDrill)showDrill(Number(initialDrill[1]),false);
+else show(initial?Number(initial[1]):1,false);
 </script>
 </body>
 </html>
