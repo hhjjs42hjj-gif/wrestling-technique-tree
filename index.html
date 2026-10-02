@@ -776,7 +776,7 @@ HEAD → HANDS / HORN UP → HIPS → ANGLE → COUNTERATTACK → SCORE`,refs:[1
     ├── STOP SCRAMBLING
     ├── Cover
     └── Establish Control`,refs:[14,21]},
-{n:29,title:'Defense',tree:`DEFENSE — RECOGNIZE THE THREAT → CLEAR CONTROL → RECOVER POSITION
+{n:29,title:"Defense: Referee's Position",tree:`DEFENSE — REFEREE'S POSITION
 │
 ├── Defense Against Legs In
 │   ├── Before Hook Is Set → Keep Elbows and Knees Connected
@@ -796,6 +796,21 @@ HEAD → HANDS / HORN UP → HIPS → ANGLE → COUNTERATTACK → SCORE`,refs:[1
 │   ├── Lock Secured → Control Their Hands With Both Hands
 │   ├── Create Space Between Head and Knee → Work to Break Lock
 │   └── Lock Broken → Turn Toward Belly → Rebuild Base
+│
+├── Defense Against Tilts
+│   ├── Before Tilt → Protect Wrists + Keep Elbows Close
+│   ├── Wrist Captured → Hand Fight → Recover Wrist
+│   ├── Opponent Loads Your Hips → Widen Base + Keep Weight Centered
+│   ├── Being Tilted → Fight Hand Control + Work Hips Toward Mat
+│   └── Control Cleared → Turn Toward Belly → Rebuild Base
+│
+└── Defense Against Peterson Roll — You Are on Top
+    ├── Recognize Trapped Arm + Opponent Reaching for Your Leg
+    ├── Free Trapped Hand / Wrist Before Roll Starts
+    ├── Move Targeted Leg Out of Reach → Keep a Wide Base
+    ├── Follow Hips → Avoid Driving Across Their Shoulders Into Roll
+    └── If Rolled → Clear Arm Control → Turn Toward Belly → Recover`,refs:[23,24,26,27]},
+{n:30,title:'Defense: Neutral',tree:`DEFENSE — NEUTRAL
 │
 ├── Defense Against Front Headlock
 │   ├── Control Chinning Wrist With Both Hands
@@ -820,20 +835,6 @@ HEAD → HANDS / HORN UP → HIPS → ANGLE → COUNTERATTACK → SCORE`,refs:[1
 │   ├── Near Cradle → Keep Head and Knee Apart → Fight Hands
 │   ├── Pancake → Do Not Drive Straight In → Keep Base → Circle Out
 │   └── Double Leg / High Crotch → Head / Hands Defense → Sprawl
-│
-├── Defense Against Tilts
-│   ├── Before Tilt → Protect Wrists + Keep Elbows Close
-│   ├── Wrist Captured → Hand Fight → Recover Wrist
-│   ├── Opponent Loads Your Hips → Widen Base + Keep Weight Centered
-│   ├── Being Tilted → Fight Hand Control + Work Hips Toward Mat
-│   └── Control Cleared → Turn Toward Belly → Rebuild Base
-│
-├── Defense Against Peterson Roll — You Are on Top
-│   ├── Recognize Trapped Arm + Opponent Reaching for Your Leg
-│   ├── Free Trapped Hand / Wrist Before Roll Starts
-│   ├── Move Targeted Leg Out of Reach → Keep a Wide Base
-│   ├── Follow Hips → Avoid Driving Across Their Shoulders Into Roll
-│   └── If Rolled → Clear Arm Control → Turn Toward Belly → Recover
 │
 ├── Defense Against Whizzer
 │   ├── Push Opponent's Head Away
@@ -866,8 +867,8 @@ HEAD → HANDS / HORN UP → HIPS → ANGLE → COUNTERATTACK → SCORE`,refs:[1
     ├── Opponent Locks Upper Body → Hand Fight + Create Hip Space
     ├── Avoid Reaching / Leaning Over Their Hips
     ├── Already Airborne → Use Practiced Breakfall → Do Not Post a Straight Arm
-    └── After Landing → Clear Control → Belly / Base → Recover`,refs:[13,23,24,26,27],coach:'Start each drill before the hold is fully secured, then add controlled resistance. Once a hold is locked, the exact escape depends on the grip and body position; stop and reset if the neck or shoulder is trapped.'},
-{n:30,title:'Misdirection Shots',tree:`FAKE → CREATE A REACTION → FOLLOW WITH A SECOND MOVE
+    └── After Landing → Clear Control → Belly / Base → Recover`,refs:[12,13,14,31,32],coach:'Start each drill before the hold is fully secured, then add controlled resistance. Once a hold is locked, the exact escape depends on the grip and body position; stop and reset if the neck or shoulder is trapped.'},
+{n:31,title:'Misdirection Shots',tree:`FAKE → CREATE A REACTION → FOLLOW WITH A SECOND MOVE
 │
 ├── Use Many Fakes
 │   ├── Fake Shots
@@ -899,8 +900,8 @@ HEAD → HANDS / HORN UP → HIPS → ANGLE → COUNTERATTACK → SCORE`,refs:[1
 └── Read the Reaction
     ├── Opponent Reacts → Attack the Opening With the Second Move
     ├── No Opening → Change Fake, Direction, or Timing
-    └── Keep Moving → Connect the Fake and Follow-Up`,refs:[1,2,5,6,7,8,9,10,11,12,31],coach:'Many combinations work. These are examples, not a fixed sequence: make the fake believable, read the reaction, and follow immediately with the next move.'},
-{n:31,title:'Throws',tree:`THROWS — START FROM CONTROL / TIE-UP
+    └── Keep Moving → Connect the Fake and Follow-Up`,refs:[1,2,5,6,7,8,9,10,11,12,32],coach:'Many combinations work. These are examples, not a fixed sequence: make the fake believable, read the reaction, and follow immediately with the next move.'},
+{n:32,title:'Throws',tree:`THROWS — START FROM CONTROL / TIE-UP
 │
 ├── Underhook + Opposite Wrist / Elbow
 │   ├── Hip Toss
@@ -921,7 +922,7 @@ HEAD → HANDS / HORN UP → HIPS → ANGLE → COUNTERATTACK → SCORE`,refs:[1
 │
 └── Russian 2-on-1
     ├── Uchi Mata
-    └── Osoto Gari`,refs:[5,6,12,30]}
+    └── Osoto Gari`,refs:[5,6,12,31]}
 ];
 
 const byNum = Object.fromEntries(sections.map(s=>[s.n,s]));
@@ -1151,7 +1152,7 @@ const treeAliases = [
   ['Low Single',11],['Low-Single',11],['Tight Waist',16],['Tight-waist',16],['Tight waist',16],
   ['Spiral Ride',17],['Spiral ride',17],['Spiral',17],['Collar Tie',2],['Collar tie',2],
   ['Shot Recovery',7],['Neutral Defense',13],['Peterson',23],
-  ['Cow Catcher',31],['Pancake',31],['Lateral Drop',31],['Hip Toss',31],['Bear Hug',31],['Body Lock',31],['Osoto Gari',31],['Uchi Mata',31]
+  ['Cow Catcher',32],['Pancake',32],['Lateral Drop',32],['Hip Toss',32],['Bear Hug',32],['Body Lock',32],['Osoto Gari',32],['Uchi Mata',32]
 ].sort((a,b)=>b[0].length-a[0].length);
 
 function linkTreeKeywords(text,currentTree=null){
