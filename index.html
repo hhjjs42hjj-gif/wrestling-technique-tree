@@ -1081,7 +1081,11 @@ const treeAliases = [
   ['Cow Catcher',31],['Pancake',31],['Lateral Drop',31],['Hip Toss',31],['Body Lock',31],['Osoto Gari',31],['Uchi Mata',31]
 ].sort((a,b)=>b[0].length-a[0].length);
 
-function linkTreeKeywords(text){
+function linkTreeKeywords(text,currentTree=null){
+  let out=String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const placeholders=[];
+  for(const [label,n] of treeAliases){
+    const esc=label.replace(/[.*+?^$()|[\]\\]/g,'\\function linkTreeKeywords(text){
   let out=String(text).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const placeholders=[];
   for(const [label,n] of treeAliases){
@@ -1102,6 +1106,28 @@ function addTreeLinks(text){
     const prefix=m?m[1]:'';
     const body=m?m[2]:line;
     return `<span class="tree-line"><span class="tree-prefix">${prefix}</span><span class="tree-text">${linkTreeKeywords(body)}</span></span>`;
+  }).join('');
+}');
+    out=out.replace(new RegExp(esc,'gi'),match=>{
+      const token='@@TREE_LINK_'+placeholders.length+'@@';
+      // Blue text must always navigate somewhere useful. Do not link a
+      // technique back to the same Skill Tree the wrestler is already viewing.
+      placeholders.push(Number(currentTree)===Number(n)
+        ? match
+        : '<a href="#section-'+n+'" data-go="'+n+'">'+match+'</a>');
+      return token;
+    });
+  }
+  placeholders.forEach((html,i)=>{out=out.replace('@@TREE_LINK_'+i+'@@',html)});
+  return out;
+}
+function addTreeLinks(text,currentTree=null){
+  return text.split('\n').map(line=>{
+    if(line==='') return '<span class="tree-line">&nbsp;</span>';
+    const m=line.match(/^([\s│├└─]*)(.*)$/);
+    const prefix=m?m[1]:'';
+    const body=m?m[2]:line;
+    return `<span class="tree-line"><span class="tree-prefix">${prefix}</span><span class="tree-text">${linkTreeKeywords(body,currentTree)}</span></span>`;
   }).join('');
 }
 
@@ -1248,7 +1274,7 @@ sections.forEach((s,i)=>{
   sec.innerHTML=`<div class="card">
     <h2>${s.n}. ${s.title}${s.badge?`<span class="badge">${s.badge}</span>`:''}</h2>
     <div class="sub">Click any linked tree reference to jump to that related section.</div>
-    <div class="tree">${addTreeLinks(s.tree)}</div>
+    <div class="tree">${addTreeLinks(s.tree,s.n)}</div>
     ${s.coach?`<div class="coach">${s.coach}</div>`:''}
     ${refLinks?`<div class="links"><strong>Related trees:</strong><br>${refLinks}</div>`:''}
   </div>`;
