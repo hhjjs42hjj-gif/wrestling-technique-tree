@@ -35,6 +35,7 @@ main{padding:24px;max-width:1200px;width:100%}
 .coach{margin-top:14px;padding:12px 14px;border-left:3px solid var(--good);background:#101820;color:#d9e8df;border-radius:8px}
 #top-button{position:fixed;right:22px;bottom:22px;z-index:10;border:1px solid var(--line);border-radius:999px;background:var(--panel2);color:var(--text);padding:10px 16px;font:inherit;font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,.3)}
 #top-button:hover{border-color:var(--accent);background:var(--panel)}
+#current-selection{display:none}
 
 .nav-group{margin:4px 0 12px;border:1px solid var(--line);border-radius:10px;background:#111821;overflow:hidden}
 .nav-group>button{margin:0;border:0;border-radius:0;font-weight:700}
@@ -70,7 +71,8 @@ main{padding:24px;max-width:1200px;width:100%}
 @media(max-width:800px){.curriculum-overview,.core6-grid{grid-template-columns:1fr}}
 @media(max-width:800px){.nav-group{grid-column:1/-1}.nav-submenu{grid-template-columns:1fr 1fr}.drill-table{display:block;overflow-x:auto}.drill-table th,.drill-table td{min-width:160px}}
 
-@media(max-width:800px){header{position:relative;top:auto}.layout{grid-template-columns:1fr}nav{position:sticky;top:0;z-index:20;height:auto;overflow:visible;border-right:none;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:8px;box-shadow:0 8px 18px rgba(0,0,0,.35)}nav h2{grid-column:1/-1}nav button{margin:0}.search-area{position:sticky;top:0;z-index:22;background:var(--panel);padding-bottom:8px;margin-bottom:8px}main{padding:14px}.section{scroll-margin-top:245px}.section h2{font-size:23px}}
+@media(max-width:800px){header{position:relative;top:auto}.layout{grid-template-columns:1fr}
+#current-selection{display:block;position:sticky;top:0;z-index:24;background:var(--panel2);border-bottom:1px solid var(--line);padding:8px 14px;font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}nav{position:sticky;top:0;z-index:20;height:auto;overflow:visible;border-right:none;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr;gap:8px;box-shadow:0 8px 18px rgba(0,0,0,.35)}nav h2{grid-column:1/-1}nav button{margin:0}.search-area{position:sticky;top:0;z-index:22;background:var(--panel);padding-bottom:8px;margin-bottom:8px}main{padding:14px}.section{scroll-margin-top:245px}.section h2{font-size:23px}}
 </style>
 </head>
 <body>
@@ -86,7 +88,7 @@ main{padding:24px;max-width:1200px;width:100%}
     <div id="search-results" aria-live="polite"></div>
   </div>
 </nav>
-<main id="main"></main>
+<div id="current-selection" aria-live="polite">Current: 1. Neutral — Root Position</div><main id="main"></main>
 </div>
 <button id="top-button" type="button" aria-label="Back to search">Top</button>
 <script>
@@ -866,6 +868,7 @@ const main = document.getElementById('main');
 const searchInput = document.getElementById('tree-search');
 const searchResults = document.getElementById('search-results');
 const topButton = document.getElementById('top-button');
+const currentSelection = document.getElementById('current-selection');
 topButton.addEventListener('click',()=>{
   const searchArea=document.querySelector('.search-area');
   if(searchArea)searchArea.scrollIntoView({behavior:'smooth',block:'start'});
@@ -1285,6 +1288,10 @@ function revealTarget(target){
   }
 }
 
+function setCurrentSelection(label){
+  if(currentSelection) currentSelection.textContent='Current: '+label;
+}
+
 function show(n,push=false){
   document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('nav button[data-n]').forEach(x=>x.classList.toggle('active',Number(x.dataset.n)===n));
@@ -1292,6 +1299,7 @@ function show(n,push=false){
   document.querySelectorAll('nav button[data-week], nav button[data-curriculum]').forEach(x=>x.classList.remove('active'));
   skillMenu.classList.add('open');
   skillMenuButton.setAttribute('aria-expanded','true');
+  setCurrentSelection(`${n}. ${byNum[n].title}`);
   const target=document.getElementById(`section-${n}`);
   if(target){revealTarget(target);if(push)history.pushState(null,'',`#section-${n}`)}
 }
@@ -1303,6 +1311,7 @@ function showDrill(n,push=false){
   document.querySelectorAll('nav button[data-drill]').forEach(x=>x.classList.toggle('active',Number(x.dataset.drill)===n));
   drillMenu.classList.add('open');
   drillMenuButton.setAttribute('aria-expanded','true');
+  setCurrentSelection(`Drill Level ${n} — ${drillLevels.find(x=>x.n===n)?.title || ''}`);
   const target=document.getElementById(`drill-level-${n}`);
   if(target){revealTarget(target);if(push)history.pushState(null,'',`#drill-level-${n}`)}
 }
@@ -1315,6 +1324,7 @@ function showCurriculum(n,push=false){
   const isCore=n==='core';
   if(isCore) coreButton.classList.add('active');
   else document.querySelectorAll('nav button[data-week]').forEach(x=>x.classList.toggle('active',Number(x.dataset.week)===Number(n)));
+  setCurrentSelection(isCore ? 'Core 6 — Foundation System' : `Curriculum Week ${n} — ${curriculumWeeks.find(x=>x.n===Number(n))?.range || ''}`);
   const target=document.getElementById(isCore?'curriculum-core':`curriculum-week-${n}`);
   if(target){
     revealTarget(target);
