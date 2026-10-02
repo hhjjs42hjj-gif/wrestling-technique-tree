@@ -1243,6 +1243,7 @@ curriculumWeeks.forEach(week=>{
       <h3>${p[0]}</h3>
       <div class="practice-focus">${linkTreeKeywords(p[1])}</div>
       <p><strong>Teach / review:</strong> ${linkTreeKeywords(p[2])}</p>
+      <p><strong>Approx. time:</strong> Drills ${Math.round((parseInt(week.drill,10)*90/100)/5)*5} min · Live ${90-Math.round((parseInt(week.drill,10)*90/100)/5)*5} min</p>
       <p><strong>Drill:</strong> ${linkTreeKeywords(detail[0])}</p>
       <p><strong>Reaction / chain:</strong> ${linkTreeKeywords(detail[1])}</p>
       <p class="practice-live"><strong>Positional / live:</strong> ${linkTreeKeywords(detail[2])}</p>
